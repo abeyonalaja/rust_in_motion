@@ -1,23 +1,23 @@
-struct Person {
-    name: String,
-}
-
-fn congratulate(person: &Person) {
-    println!("Congratulations, {}!!!", person.name);
-}
-
 fn main() {
-    let s = String::from("book");
-    let p = pluralize(&s);
-    println!("I have one {}, you have two {}", s, p,);
+    let a = [1, 2, 3];
+    let v = vec![4, 5, 6];
+    let v_slice = &v[..];
 
-    let ps = Person {
-        name: String::from("Abey"),
-    };
-    congratulate(&ps);
-    println!("Can still use ps here: {}", ps.name)
+    only_reference_to_array(&a);
+    only_reference_to_vector(&v);
+    reference_to_either_array_or_vector(&a[..]);
+    reference_to_either_array_or_vector(&v[..]);
+    reference_to_either_array_or_vector(&v_slice[0..1]);
 }
 
-fn pluralize(word: &str) -> String {
-    word.to_owned() + "s"
+fn only_reference_to_array(param: &[i32; 3]) {
+    println!("This is an array: {:?}", param);
+}
+
+fn only_reference_to_vector(param: &Vec<i32>) {
+    println!("This is a vector: {:?}", param);
+}
+
+fn reference_to_either_array_or_vector(param: &[i32]) {
+    println!("this is a slice: {:?}", param);
 }
