@@ -1,23 +1,39 @@
+#[derive(Debug)]
+struct Bucket {
+    liters: u32,
+}
+
+#[derive(Debug)]
+struct CarPool {
+    passengers: Vec<String>,
+}
+
+impl CarPool {
+    /// Add the named passenger to the carpool
+    fn pick_up(&mut self, name: String) {
+        self.passengers.push(name);
+    }
+}
+
+fn pour(source: &mut Bucket, target: &mut Bucket, amount: u32) {
+    source.liters -= amount;
+    target.liters += amount;
+}
+
 fn main() {
-    let a = [1, 2, 3];
-    let v = vec![4, 5, 6];
-    let v_slice = &v[..];
+    let mut bucket1 = Bucket { liters: 20 };
+    let mut bucket2 = Bucket { liters: 10 };
 
-    only_reference_to_array(&a);
-    only_reference_to_vector(&v);
-    reference_to_either_array_or_vector(&a[..]);
-    reference_to_either_array_or_vector(&v[..]);
-    reference_to_either_array_or_vector(&v_slice[0..1]);
-}
+    let mut monday_car_pool = CarPool { passengers: vec![] };
 
-fn only_reference_to_array(param: &[i32; 3]) {
-    println!("This is an array: {:?}", param);
-}
+    monday_car_pool.pick_up(String::from("Abey"));
+    println!("Carpool state: {:?}", monday_car_pool);
 
-fn only_reference_to_vector(param: &Vec<i32>) {
-    println!("This is a vector: {:?}", param);
-}
+    monday_car_pool.pick_up(String::from("Christy"));
+    println!("Carpool state: {:?}", monday_car_pool);
 
-fn reference_to_either_array_or_vector(param: &[i32]) {
-    println!("this is a slice: {:?}", param);
+    pour(&mut bucket1, &mut bucket2, 3);
+
+    println!("Bucket 1: {:?}", bucket1);
+    println!("Bucket 2: {:?}", bucket2);
 }
