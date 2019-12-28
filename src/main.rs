@@ -1,35 +1,31 @@
-use std::collections::HashMap;
-
-struct Player {
-    score: i32,
+pub struct Stats {
+    hp: u8,
+    sp: u8,
 }
 
-impl Player {
-    fn set_score(&mut self, new_score: i32) {
-        self.score = new_score;
-    }
+pub struct Monster {
+    stats: Stats,
+    friends: Vec<Friend>,
+}
 
-    fn score(&self) -> i32 {
-        self.score()
-    }
+pub struct Friend {
+    loyalty: u8,
+}
 
-    fn new() -> Self {
-        Player { score: 0 }
+impl Monster {
+    pub fn final_breath(&mut self) {
+        if let Some(friend) = self.friends.first() {
+            self.stats.heal(friend.loyalty);
+            println!("Healing for {}", friend.loyalty);
+        }
     }
 }
 
-fn main() {
-    let mut player1 = Player::new();
-    let mut score = player1.score;
-
-    player1.set_score(score + 1);
-
-    let text = "hello world hello";
-    let mut freqs = HashMap::new();
-
-    for word in text.split_whitespace() {
-        *freqs.entry(word).or_insert(0) += 1;
+impl Stats {
+    pub fn heal(&mut self, amount: u8) {
+        self.hp += amount;
+        self.sp -= amount;
     }
-
-    println!("Word frequences: {:?}", freqs);
 }
+
+fn main() {}
