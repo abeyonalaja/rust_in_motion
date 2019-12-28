@@ -1,39 +1,35 @@
-#[derive(Debug)]
-struct Bucket {
-    liters: u32,
+use std::collections::HashMap;
+
+struct Player {
+    score: i32,
 }
 
-#[derive(Debug)]
-struct CarPool {
-    passengers: Vec<String>,
-}
+impl Player {
+    fn set_score(&mut self, new_score: i32) {
+        self.score = new_score;
+    }
 
-impl CarPool {
-    /// Add the named passenger to the carpool
-    fn pick_up(&mut self, name: String) {
-        self.passengers.push(name);
+    fn score(&self) -> i32 {
+        self.score()
+    }
+
+    fn new() -> Self {
+        Player { score: 0 }
     }
 }
 
-fn pour(source: &mut Bucket, target: &mut Bucket, amount: u32) {
-    source.liters -= amount;
-    target.liters += amount;
-}
-
 fn main() {
-    let mut bucket1 = Bucket { liters: 20 };
-    let mut bucket2 = Bucket { liters: 10 };
+    let mut player1 = Player::new();
+    let mut score = player1.score;
 
-    let mut monday_car_pool = CarPool { passengers: vec![] };
+    player1.set_score(score + 1);
 
-    monday_car_pool.pick_up(String::from("Abey"));
-    println!("Carpool state: {:?}", monday_car_pool);
+    let text = "hello world hello";
+    let mut freqs = HashMap::new();
 
-    monday_car_pool.pick_up(String::from("Christy"));
-    println!("Carpool state: {:?}", monday_car_pool);
+    for word in text.split_whitespace() {
+        *freqs.entry(word).or_insert(0) += 1;
+    }
 
-    pour(&mut bucket1, &mut bucket2, 3);
-
-    println!("Bucket 1: {:?}", bucket1);
-    println!("Bucket 2: {:?}", bucket2);
+    println!("Word frequences: {:?}", freqs);
 }
